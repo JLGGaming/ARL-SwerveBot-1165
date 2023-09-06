@@ -38,7 +38,8 @@ public class TeleopDrive extends CommandBase
    *
    * @param swerve The subsystem used by this command.
    */
-  public TeleopDrive(SwerveSubsystem swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier omega,
+  public 
+  TeleopDrive(SwerveSubsystem swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier omega,
                      BooleanSupplier driveMode, boolean isOpenLoop, boolean headingCorrection)
   {
     this.swerve = swerve;
