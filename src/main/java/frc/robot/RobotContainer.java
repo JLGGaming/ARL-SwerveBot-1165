@@ -19,7 +19,13 @@ import frc.robot.commands.swervedrive.auto.Autos;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDrive;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
+import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.commands.arm.ScoreHigh;
+import frc.robot.commands.arm.ScoreLow;
+import frc.robot.commands.arm.ScoreMid;
+import frc.robot.commands.arm.LoadIn;
 import java.io.File;
 
 /**
@@ -33,13 +39,16 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                          "swerve/neo"));
+                                                                         
+  public final static ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  public final static IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   // CommandJoystick rotationController = new CommandJoystick(1);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   CommandXboxController driverController = new CommandXboxController(0);
 
   // CommandJoystick driverController   = new CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
-  XboxController driverXbox = new XboxController(1);
-
+  // XboxController driverXbox = new XboxController(1);
+  public static CommandXboxController coDriverController = new CommandXboxController(1);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -99,8 +108,14 @@ public class RobotContainer
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     driverController.a().onTrue(new InstantCommand(drivebase::zeroGyro));
+    coDriverController.rightTrigger(0.2).whileTrue(new LoadIn());
+
+    coDriverController.povUp().onTrue(new ScoreHigh());
+    coDriverController.povLeft().onTrue(new ScoreMid());
+    coDriverController.povRight().onTrue(new ScoreMid());
+    coDriverController.povDown().onTrue(new ScoreLow());
     // new Joysti ckButton(driverController.a()).onTrue((new InstantCommand(drivebase::zeroGyro)));
-    new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
+    // new JoystickButton(coDriverController, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
 //    new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
   }
 
