@@ -1,29 +1,29 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [1]": {
+      "SPARK MAX [17]": {
         "header": {
           "open": true
         }
       },
       "Talon FX[50]": {
         "header": {
-          "open": true
+          "open": false
         }
       },
       "Talon FX[51]/Integrated Sensor": {
         "header": {
-          "open": true
+          "open": false
         }
       },
       "Talon FX[52]/Integrated Sensor": {
         "header": {
-          "open": true
+          "open": false
         }
       },
       "Talon FX[8]/Integrated Sensor": {
         "header": {
-          "open": true
+          "open": false
         }
       }
     }
@@ -31,41 +31,20 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/LiveWindow/SwerveSubsystem": "Subsystem",
-      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
-      "/LiveWindow/Ungrouped/Pigeon 2 [13]": "Gyro",
-      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/Pigeon 2 [13]": "Gyro",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser",
-      "/SmartDashboard/navX-Sensor[1]": "Gyro"
-    },
-    "windows": {
-      "/SmartDashboard/Field": {
-        "XModules": {
-          "arrowColor": [
-            0.09611687064170837,
-            0.17414122819900513,
-            0.9803921580314636,
-            255.0
-          ],
-          "arrowSize": 33,
-          "arrowWeight": 3.0,
-          "style": "Hidden"
-        },
-        "window": {
-          "visible": true
-        }
-      }
+      "/SmartDashboard/Pigeon 2 [15]": "Gyro"
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
+    },
     "transitory": {
       "SmartDashboard": {
-        "open": true,
-        "swerve": {
-          "open": true
-        }
+        "open": true
       }
     }
   }

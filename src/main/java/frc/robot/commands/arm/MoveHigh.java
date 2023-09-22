@@ -34,6 +34,7 @@ public class MoveHigh extends CommandBase {
   @Override
   public void execute() {
     double speed = MathUtil.clamp(armController.calculate(RobotContainer.m_armSubsystem.getArmPosition()),  ArmPIDConstants.kSpeedMin, ArmPIDConstants.kSpeedMax);
+    System.out.println(speed);
     RobotContainer.m_armSubsystem.setArmSpeed(speed);
   }
 

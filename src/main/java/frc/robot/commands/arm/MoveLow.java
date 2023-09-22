@@ -37,7 +37,9 @@ public class MoveLow extends CommandBase {
   @Override
   public void execute() {
     double speed = MathUtil.clamp(armController.calculate(RobotContainer.m_armSubsystem.getArmPosition()), ArmPIDConstants.kSpeedMin, ArmPIDConstants.kSpeedMax);
-    RobotContainer.m_armSubsystem.setArmSpeed(speed);
+    // RobotContainer.m_armSubsystem.setArmSpeed(speed);
+    System.out.println(speed);
+
   }
 
   // Called once the command ends or is interrupted.

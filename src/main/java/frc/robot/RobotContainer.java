@@ -19,13 +19,18 @@ import frc.robot.commands.swervedrive.auto.Autos;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDrive;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
-import frc.robot.subsystems.arm.ArmSubsystem;
-import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.commands.arm.ScoreHigh;
 import frc.robot.commands.arm.ScoreLow;
 import frc.robot.commands.arm.ScoreMid;
+import frc.robot.commands.intake.Intake;
 import frc.robot.commands.arm.LoadIn;
+import frc.robot.commands.arm.MoveHigh;
+import frc.robot.commands.arm.MoveOverride;
+import frc.robot.commands.arm.NudgeAuto;
+
 import java.io.File;
 
 /**
@@ -94,6 +99,7 @@ public class RobotContainer
     //drivebase.setDefaultCommand(!RobotBase.isSimulation() ? closedAbsoluteDrive : closedAbsoluteDrive);
     
     drivebase.setDefaultCommand(closedFieldRel);
+    m_armSubsystem.setDefaultCommand(new MoveOverride());
   }
 
   /**
@@ -108,7 +114,7 @@ public class RobotContainer
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     driverController.a().onTrue(new InstantCommand(drivebase::zeroGyro));
-    coDriverController.rightTrigger(0.2).whileTrue(new LoadIn());
+    // coDriverController.rightTrigger(0.2).whileTrue(new LoadIn());
 
     coDriverController.povUp().onTrue(new ScoreHigh());
     coDriverController.povLeft().onTrue(new ScoreMid());
@@ -127,7 +133,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return null;
+    return new NudgeAuto();
   }
 
   public void setDriveMode()

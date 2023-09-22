@@ -28,6 +28,7 @@ public class MoveMid extends CommandBase {
   public void initialize() {
     armController.reset();
     System.out.println("Moving Arm Mid");
+    
 
   }
 
@@ -35,7 +36,8 @@ public class MoveMid extends CommandBase {
   @Override
   public void execute() {
     double speed = MathUtil.clamp(armController.calculate(RobotContainer.m_armSubsystem.getArmPosition()), ArmPIDConstants.kSpeedMin, ArmPIDConstants.kSpeedMax);
-    RobotContainer.m_armSubsystem.setArmSpeed(speed);
+    // RobotContainer.m_armSubsystem.setArmSpeed(speed);
+    System.out.println(speed);
   }
 
   // Called once the command ends or is interrupted.
