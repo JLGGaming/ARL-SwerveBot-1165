@@ -28,6 +28,7 @@ import frc.robot.commands.arm.ScoreMid;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.arm.LoadIn;
 import frc.robot.commands.arm.MoveHigh;
+import frc.robot.commands.arm.MoveMid;
 import frc.robot.commands.arm.MoveOverride;
 import frc.robot.commands.arm.NudgeAuto;
 
@@ -42,7 +43,7 @@ public class RobotContainer
 {
 
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+  public final static SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                          "swerve/neo"));
                                                                          
   public final static ArmSubsystem m_armSubsystem = new ArmSubsystem();
@@ -61,7 +62,6 @@ public class RobotContainer
   {
     // Configure the trigger bindings
 
-    configureBindings();
 
 
     AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
@@ -96,10 +96,27 @@ public class RobotContainer
         () -> -driverController.getRightX(), () -> true, false, false);
 
 
+    TeleopDrive closedRobotRel = new TeleopDrive(
+        drivebase,
+        () -> MathUtil.applyDeadband(driverController.getLeftY()*-1, OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(driverController.getLeftX()*-1, OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverController.getRightX(), () -> false, false, false);
+
+    TeleopDrive headingDrive = new TeleopDrive(
+          drivebase,
+          () -> MathUtil.applyDeadband(driverController.getLeftY()*-1, OperatorConstants.LEFT_Y_DEADBAND),
+          () -> MathUtil.applyDeadband(driverController.getLeftX()*-1, OperatorConstants.LEFT_X_DEADBAND),
+          () -> -driverController.getRightX(), () -> true,
+           false, true);
+
     //drivebase.setDefaultCommand(!RobotBase.isSimulation() ? closedAbsoluteDrive : closedAbsoluteDrive);
     
-    drivebase.setDefaultCommand(closedFieldRel);
-    m_armSubsystem.setDefaultCommand(new MoveOverride());
+    drivebase.setDefaultCommand(headingDrive);
+    m_armSubsystem.setDefaultCommand(new MoveMid());
+
+    configureBindings();
+
+
   }
 
   /**
@@ -114,12 +131,16 @@ public class RobotContainer
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     driverController.a().onTrue(new InstantCommand(drivebase::zeroGyro));
-    // coDriverController.rightTrigger(0.2).whileTrue(new LoadIn());
+    driverController.rightTrigger(0.2).whileTrue(new LoadIn());
 
-    coDriverController.povUp().onTrue(new ScoreHigh());
-    coDriverController.povLeft().onTrue(new ScoreMid());
-    coDriverController.povRight().onTrue(new ScoreMid());
-    coDriverController.povDown().onTrue(new ScoreLow());
+    driverController.povUp().onTrue(new ScoreHigh());
+    driverController.povLeft().onTrue(new ScoreMid());
+    driverController.povRight().onTrue(new ScoreMid());
+    driverController.povDown().onTrue(new ScoreLow());
+
+
+
+
     // new Joysti ckButton(driverController.a()).onTrue((new InstantCommand(drivebase::zeroGyro)));
     // new JoystickButton(coDriverController, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
 //    new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
@@ -133,7 +154,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return new NudgeAuto();
+    return new NudgeAuto().andThen(new ScoreHigh());
   }
 
   public void setDriveMode()

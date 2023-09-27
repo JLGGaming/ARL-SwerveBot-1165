@@ -17,6 +17,7 @@ public class ScoreHigh extends SequentialCommandGroup {
   public ScoreHigh() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new MoveHigh().withTimeout(1).raceWith(new Intake(0.1)), new Outtake(IntakeConstants.kHighSpeed).withTimeout(0.25));
+    addCommands(new MoveHigh().withTimeout(0.25).raceWith(new Intake(0.1)), new Outtake(IntakeConstants.kHighSpeed).withTimeout(0.35));
   }
 }
+

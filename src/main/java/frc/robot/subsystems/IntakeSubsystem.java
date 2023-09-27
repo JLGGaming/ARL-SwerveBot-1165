@@ -22,32 +22,35 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void configMotors(){
-    intakeLeft.restoreFactoryDefaults();
-    intakeRight.restoreFactoryDefaults();
+    // intakeLeft.restoreFactoryDefaults();
+    // intakeRight.restoreFactoryDefaults();
 
     intakeRight.setIdleMode(IdleMode.kBrake);
     intakeLeft.setIdleMode(IdleMode.kBrake);
 
-    intakeRight.setInverted(false);
-    intakeLeft.setInverted(true);
+    intakeRight.setInverted(true);
+    intakeLeft.setInverted(false);
 
     intakeLeft.setSmartCurrentLimit(MotorConstants.kIntakeSmartCurrent);
     intakeRight.setSmartCurrentLimit(MotorConstants.kIntakeSmartCurrent);
+
+    intakeLeft.setClosedLoopRampRate(0);
+    intakeRight.setClosedLoopRampRate(0);
 
     // intakeRight.burnFlash();
     // intakeLeft.burnFlash();
   }
 
   public void Intake(double speed){
-    intakeLeft.set(-speed);
+    intakeLeft.set(-speed*.9);
     intakeRight.set(-speed);
   }
   
   public void Outtake(double speed){
-    intakeLeft.set(speed);
-    intakeRight.set(speed);
+    intakeLeft.set(speed*1);
+    intakeRight.set(speed*0.8);
   }
-  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

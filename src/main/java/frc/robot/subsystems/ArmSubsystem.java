@@ -37,7 +37,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void configMotors() {
     mainArmMotor.restoreFactoryDefaults();
 
-    mainArmMotor.setIdleMode(IdleMode.kBrake);
+    mainArmMotor.setIdleMode(IdleMode.kCoast);
 
     mainArmMotor.setInverted(false);
 
