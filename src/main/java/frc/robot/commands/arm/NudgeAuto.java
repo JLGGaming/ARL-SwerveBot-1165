@@ -18,7 +18,7 @@ public class NudgeAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new NudgeArm(),
-    new WaitCommand(5),
+    new WaitCommand(3),
     RobotContainer.m_armSubsystem.resetArmPosition());
   }
 }

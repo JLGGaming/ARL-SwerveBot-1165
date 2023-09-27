@@ -8,6 +8,8 @@ import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.File;
@@ -27,6 +29,10 @@ public class Robot extends TimedRobot
 
   private RobotContainer m_robotContainer;
 
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private final SendableChooser<Boolean> m_bump = new SendableChooser<>();
+  private final SendableChooser<String> m_end = new SendableChooser<>();
+
   private Timer disabledTimer;
 
   public Robot()
@@ -43,6 +49,9 @@ public class Robot extends TimedRobot
    * This function is run when the robot is first started up and should be used for any initialization code.
    */
   @Override
+
+
+
   public void robotInit()
   {
     PathPlannerServer.startServer(5811);
@@ -53,7 +62,30 @@ public class Robot extends TimedRobot
     // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
     // immediately when disabled, but then also let it be pushed more 
     disabledTimer = new Timer();
+    configAutoSelections();
   }
+
+
+
+  public void configAutoSelections(){
+    
+    m_end.addOption("Balance", "kBalance");
+    m_end.addOption("Taxi", "kTaxi");
+    m_end.addOption("0.5 Cube", "kPickup");
+
+    m_bump.addOption("Yes", true);
+    m_bump.setDefaultOption("No", false);
+
+    m_chooser.addOption("None", "kNone");
+    m_chooser.addOption("One Cube", "kOneCube");
+    m_chooser.setDefaultOption("Two Cube", "kTwoCube");
+    m_chooser.addOption("Three Cube", "kThreeCube");
+    
+    SmartDashboard.putData("Cube Ammount", m_chooser);
+    SmartDashboard.putData("Bump Side", m_bump);
+    SmartDashboard.putData("End Routine", m_end);
+  }
+
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics that you want ran
@@ -100,7 +132,7 @@ public class Robot extends TimedRobot
   public void autonomousInit()
   {
     m_robotContainer.setMotorBrake(true);
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_chooser.getSelected(), m_bump.getSelected(), m_end.getSelected());
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)
