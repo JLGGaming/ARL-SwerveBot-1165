@@ -4,17 +4,21 @@
 
 package frc.robot;
 
+import java.io.File;
+
+import com.pathplanner.lib.PathConstraints;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.arm.MoveOverride;
+import frc.robot.commands.arm.ScoreHigh;
+import frc.robot.commands.arm.ScoreLow;
+import frc.robot.commands.arm.ScoreMid;
 import frc.robot.commands.swervedrive.auto.Autos;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDrive;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
@@ -93,7 +97,7 @@ public class RobotContainer
         drivebase,
         () -> MathUtil.applyDeadband(driverController.getLeftY()*-1, OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(driverController.getLeftX()*-1, OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverController.getRightX(), () -> true, false, false);
+        () -> -driverController.getRightX(), () -> true, false, true);
 
 
     TeleopDrive closedRobotRel = new TeleopDrive(
@@ -110,13 +114,8 @@ public class RobotContainer
            false, true);
 
     //drivebase.setDefaultCommand(!RobotBase.isSimulation() ? closedAbsoluteDrive : closedAbsoluteDrive);
-    
-    drivebase.setDefaultCommand(headingDrive);
-    m_armSubsystem.setDefaultCommand(new MoveMid());
-
-    configureBindings();
-
-
+    drivebase.setDefaultCommand(closedAbsoluteDrive);
+    m_armSubsystem.setDefaultCommand(new MoveOverride());
   }
 
   /**
@@ -151,15 +150,67 @@ public class RobotContainer
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand()
+  public Command getAutonomousCommand(String cube, boolean bump, String end)
   {
     // An example command will be run in autonomous
-    return new NudgeAuto().andThen(new ScoreHigh());
+    // return new NudgeAuto()
+
+    if (cube.equals("kNone")){
+      return null;
+    }
+
+    if (cube.equals("kOneCube"))
+      if (bump){
+        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "One Cube Bump Balance", new PathConstraints(3, 3), true);
+        
+        else if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "One Cube Bump Pickup", new PathConstraints(3, 3), false);
+
+        else if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "One Cube Bump Pickup", new PathConstraints(3, 3), false);
+      }
+
+    if (cube.equals("kTwoCube"))
+      if (bump){
+        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "2 Cube Bump Balance", new PathConstraints(3, 3), false);
+        if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "2 Cube Bump Pickup", new PathConstraints(3, 3), false);
+        if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "2 Cube Bump Pickup", new PathConstraints(3, 3), false);
+
+      }
+
+      else if (bump == false) {
+        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "2 Cube NoBump Balance", new PathConstraints(3, 3), false);
+        if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "2 Cube NoBump Pickup", new PathConstraints(3, 3), false);
+        if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "2 Cube NoBump Pickup", new PathConstraints(3, 3), false);
+      }
+
+
+
+    if (cube.equals("kThreeCube")){
+      if (bump) {
+        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "3 Cube Bump Balance", new PathConstraints(3, 3), true);
+        if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "3 Cube Bump Taxi", new PathConstraints(3, 3), false);
+        if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "3 Cube Bump Pickup", new PathConstraints(3, 3), false);
+
+      }
+      else if (bump == false) {
+        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "3 Cube NoBump Balance", new PathConstraints(3, 3), false);
+        if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "3 Cube NoBump", new PathConstraints(3, 3), false);
+        if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "3 Cube NoBump Pickup", new PathConstraints(3, 3), false);
+
+        
+      }
+
+
+    }
+
+
+
+
+    return null;
   }
 
   public void setDriveMode()
   {
-    //drivebase.setDefaultCommand();
+    // drivebase.setDefaultCommand(closedAbsoluteDrive);
   }
 
   public void setMotorBrake(boolean brake)

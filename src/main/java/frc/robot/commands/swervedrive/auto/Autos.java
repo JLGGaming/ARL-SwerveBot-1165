@@ -47,15 +47,15 @@ public final class Autos
   /**
    * Example static factory for an autonomous command.
    */
-  public static CommandBase exampleAuto(SwerveSubsystem swerve)
+  public static CommandBase FollowPath(SwerveSubsystem swerve, String pathName, PathConstraints constraints, boolean OnTheFly)
   {
     boolean               onTheFly = false; // Use the path defined in code or loaded from PathPlanner.
-    PathPlannerTrajectory example;
+    PathPlannerTrajectory AutoPathPoints;
     if (onTheFly)
     {
       // Simple path with holonomic rotation. Stationary start/end. Max velocity of 4 m/s and max accel of 3 m/s^2
-      example = PathPlanner.generatePath(
-          new PathConstraints(4, 3),
+      AutoPathPoints = PathPlanner.generatePath(
+          new PathConstraints(3, 3),
           new PathPoint(new Translation2d(0, 0), Rotation2d.fromDegrees(0), Rotation2d.fromDegrees(0)),
 // position, heading(direction of travel), holonomic rotation
           new PathPoint(new Translation2d(3, 5), Rotation2d.fromDegrees(90), Rotation2d.fromDegrees(90)),
@@ -65,11 +65,19 @@ public final class Autos
                                         );
     } else
     {
-      List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("SamplePath", new PathConstraints(4, 3));
+      List<PathPlannerTrajectory> AutoPath = PathPlanner.loadPathGroup(pathName, constraints);
       // This is just an example event map. It would be better to have a constant, global event map
       // in your code that will be used by all path following commands.
       HashMap<String, Command> eventMap = new HashMap<>();
-      eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+      eventMap.put("RetractIntake", new PrintCommand("Retracting Intake"));
+      eventMap.put("LowerIntake", new PrintCommand("Lowering Intake"));
+      eventMap.put("ShootMid", new PrintCommand("Shooting Mid"));
+      eventMap.put("ShootLow", new PrintCommand("Shooting Low"));
+      eventMap.put("ShootHigh", new PrintCommand("Shooting High"));
+
+
+    
+
 
       // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want
       // to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
@@ -90,10 +98,10 @@ public final class Autos
           swerve
 // The drive subsystem. Used to properly set the requirements of path following commands
       );
-      return Commands.sequence(autoBuilder.fullAuto(example1));
+      return Commands.sequence(autoBuilder.fullAuto(AutoPath));
     }
 //    swerve.postTrajectory(example);
-    return Commands.sequence(new FollowTrajectory(swerve, example, true));
+    return Commands.sequence(new FollowTrajectory(swerve, AutoPathPoints, false));
   }
 
   /**

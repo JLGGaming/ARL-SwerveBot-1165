@@ -1,0 +1,96 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.831789277613643,
+        "y": 4.416199885031349
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.3189845327059078,
+        "y": 4.679179533797664
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "sequential",
+        "waitBehavior": "after",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.0551091979376945,
+        "y": 4.6157016875437265
+      },
+      "prevControl": {
+        "x": 4.044445632750914,
+        "y": 4.969363973815667
+      },
+      "nextControl": {
+        "x": 4.044445632750914,
+        "y": 4.969363973815667
+      },
+      "holonomicAngle": -15.350136492424447,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.8227210138630805,
+        "y": 4.416199885031349
+      },
+      "prevControl": {
+        "x": 5.440958250337554,
+        "y": 4.969363973815667
+      },
+      "nextControl": null,
+      "holonomicAngle": 0.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "maxVelocity": 3.0,
+  "maxAcceleration": null,
+  "isReversed": null,
+  "markers": [
+    {
+      "position": 0.7272727272727271,
+      "names": [
+        "LowerIntake"
+      ]
+    },
+    {
+      "position": 1.1818181818181819,
+      "names": [
+        "RetractIntake"
+      ]
+    },
+    {
+      "position": 2.0,
+      "names": [
+        "ShootMid"
+      ]
+    }
+  ]
+}
