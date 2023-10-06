@@ -16,7 +16,9 @@
       "isLocked": true,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "ShootHigh"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -63,7 +65,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "ShootMid"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -78,7 +82,7 @@
       ]
     },
     {
-      "position": 1.090909090909091,
+      "position": 1.1345454545454523,
       "names": [
         "RetractIntake"
       ]

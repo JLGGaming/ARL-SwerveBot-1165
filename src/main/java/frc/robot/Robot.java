@@ -30,6 +30,7 @@ public class Robot extends TimedRobot
   private RobotContainer m_robotContainer;
 
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private final SendableChooser<Boolean> m_team = new SendableChooser<>();
   private final SendableChooser<Boolean> m_bump = new SendableChooser<>();
   private final SendableChooser<String> m_end = new SendableChooser<>();
 
@@ -69,9 +70,15 @@ public class Robot extends TimedRobot
 
   public void configAutoSelections(){
     
+    m_team.addOption("Blue", false);
+    m_team.addOption("Red", true);
+
+    
     m_end.addOption("Balance", "kBalance");
     m_end.addOption("Taxi", "kTaxi");
     m_end.addOption("0.5 Cube", "kPickup");
+    m_end.addOption("None", "kNone");
+
 
     m_bump.addOption("Yes", true);
     m_bump.setDefaultOption("No", false);
@@ -84,6 +91,8 @@ public class Robot extends TimedRobot
     SmartDashboard.putData("Cube Ammount", m_chooser);
     SmartDashboard.putData("Bump Side", m_bump);
     SmartDashboard.putData("End Routine", m_end);
+    SmartDashboard.putData("Allience Color", m_team);
+
   }
 
 
@@ -132,7 +141,7 @@ public class Robot extends TimedRobot
   public void autonomousInit()
   {
     m_robotContainer.setMotorBrake(true);
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_chooser.getSelected(), m_bump.getSelected(), m_end.getSelected());
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_chooser.getSelected(), m_team.getSelected(), m_bump.getSelected(), m_end.getSelected());
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)
@@ -192,6 +201,7 @@ public class Robot extends TimedRobot
   @Override
   public void testPeriodic()
   {
+
   }
 
   /**

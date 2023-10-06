@@ -16,9 +16,11 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "ShootHigh"
+        ],
         "executionBehavior": "sequential",
-        "waitBehavior": "after",
+        "waitBehavior": "none",
         "waitTime": 0
       }
     },
@@ -124,12 +126,12 @@
     },
     {
       "anchorPoint": {
-        "x": 6.873743922926442,
-        "y": 2.883663311186272
+        "x": 7.0135513192641605,
+        "y": 2.484848960196733
       },
       "prevControl": {
-        "x": 6.3840576803960625,
-        "y": 5.731098128862921
+        "x": 6.523865076733781,
+        "y": 5.33228377787338
       },
       "nextControl": null,
       "holonomicAngle": -77.2287574350985,
@@ -138,7 +140,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "RetractIntake"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -156,13 +160,13 @@
       ]
     },
     {
-      "position": 1.1818181818181819,
+      "position": 1.0909090909090908,
       "names": [
         "RetractIntake"
       ]
     },
     {
-      "position": 1.9636363636363636,
+      "position": 2.0,
       "names": [
         "ShootMid"
       ]
@@ -174,9 +178,21 @@
       ]
     },
     {
-      "position": 3.4090909090909087,
+      "position": 3.309090909090917,
       "names": [
         "RetractIntake"
+      ]
+    },
+    {
+      "position": 4.0,
+      "names": [
+        "ShootLow"
+      ]
+    },
+    {
+      "position": 4.472727272727327,
+      "names": [
+        "LowerIntake"
       ]
     }
   ]

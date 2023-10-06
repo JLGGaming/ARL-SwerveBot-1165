@@ -21,6 +21,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import frc.robot.Constants.Auton;
+import frc.robot.commands.arm.LoadIn;
+import frc.robot.commands.arm.MoveGround;
+import frc.robot.commands.arm.MoveMid;
+import frc.robot.commands.arm.ScoreLow;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.util.HashMap;
 import java.util.List;
@@ -58,9 +62,9 @@ public final class Autos
           new PathConstraints(3, 3),
           new PathPoint(new Translation2d(0, 0), Rotation2d.fromDegrees(0), Rotation2d.fromDegrees(0)),
 // position, heading(direction of travel), holonomic rotation
-          new PathPoint(new Translation2d(3, 5), Rotation2d.fromDegrees(90), Rotation2d.fromDegrees(90)),
+          // new PathPoint(new Translation2d(3, 5), Rotation2d.fromDegrees(90), Rotation2d.fromDegrees(90)),
 // position, heading(direction of travel), holonomic rotation
-          new PathPoint(new Translation2d(5, 5), Rotation2d.fromDegrees(0), Rotation2d.fromDegrees(0))
+          new PathPoint(new Translation2d(0, 1), Rotation2d.fromDegrees(0), Rotation2d.fromDegrees(0))
           // position, heading(direction of travel), holonomic rotation
                                         );
     } else
@@ -69,15 +73,17 @@ public final class Autos
       // This is just an example event map. It would be better to have a constant, global event map
       // in your code that will be used by all path following commands.
       HashMap<String, Command> eventMap = new HashMap<>();
-      eventMap.put("RetractIntake", new PrintCommand("Retracting Intake"));
-      eventMap.put("LowerIntake", new PrintCommand("Lowering Intake"));
-      eventMap.put("ShootMid", new PrintCommand("Shooting Mid"));
-      eventMap.put("ShootLow", new PrintCommand("Shooting Low"));
-      eventMap.put("ShootHigh", new PrintCommand("Shooting High"));
+
+      eventMap.put("RetractIntake", new MoveMid());
+      eventMap.put("LowerIntake", new LoadIn());
+      eventMap.put("AutoBalance", new AutoBalanceCommand(swerve));
+      eventMap.put("ShootLow", new ScoreLow());
+      eventMap.put("ShootMid", new ScoreLow());
+      eventMap.put("ShootHigh", new ScoreLow());
 
 
     
-
+      
 
       // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want
       // to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
@@ -101,7 +107,7 @@ public final class Autos
       return Commands.sequence(autoBuilder.fullAuto(AutoPath));
     }
 //    swerve.postTrajectory(example);
-    return Commands.sequence(new FollowTrajectory(swerve, AutoPathPoints, false));
+    return Commands.sequence(new FollowTrajectory(swerve, AutoPathPoints, true));
   }
 
   /**

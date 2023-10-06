@@ -273,7 +273,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Rotation2d getPitch()
   {
-    return swerveDrive.getPitch();
+    return swerveDrive.getRoll();
   }
 
   /**

@@ -48,7 +48,7 @@ public class IntakeSubsystem extends SubsystemBase {
   
   public void Outtake(double speed){
     intakeLeft.set(speed*1);
-    intakeRight.set(speed*0.8);
+    intakeRight.set(speed*1);
   }
 
   @Override

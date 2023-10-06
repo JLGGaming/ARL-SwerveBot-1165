@@ -5,6 +5,7 @@
         "x": 1.8408575413642057,
         "y": 1.0609422973231921
       },
+      "prevControl": null,
       "nextControl": {
         "x": 2.5300455864069633,
         "y": 0.371754252280435
@@ -15,7 +16,9 @@
       "isLocked": true,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "ShootHigh"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -37,7 +40,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "RetractIntake"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -46,7 +51,7 @@
   ],
   "markers": [
     {
-      "position": 0.4909090909090909,
+      "position": 0.589090909090884,
       "names": [
         "LowerIntake"
       ]

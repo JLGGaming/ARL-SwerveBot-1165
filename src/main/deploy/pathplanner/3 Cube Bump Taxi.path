@@ -156,13 +156,13 @@
       ]
     },
     {
-      "position": 1.090909090909091,
+      "position": 1.1272727272727356,
       "names": [
         "RetractIntake"
       ]
     },
     {
-      "position": 2.000000000000001,
+      "position": 2.0,
       "names": [
         "ScoreMid"
       ]
@@ -174,15 +174,9 @@
       ]
     },
     {
-      "position": 3.0454545454545467,
+      "position": 3.1272727272727154,
       "names": [
         "RetractIntake"
-      ]
-    },
-    {
-      "position": 3.5909090909090935,
-      "names": [
-        "ScoreLow"
       ]
     }
   ]

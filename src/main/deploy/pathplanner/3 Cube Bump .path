@@ -16,7 +16,9 @@
       "isLocked": true,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "ShootHigh"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -138,7 +140,9 @@
       "isLocked": true,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "ShootLow"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -153,13 +157,13 @@
       ]
     },
     {
-      "position": 1.090909090909091,
+      "position": 1.1272727272727041,
       "names": [
         "RetractIntake"
       ]
     },
     {
-      "position": 2.000000000000001,
+      "position": 2.0,
       "names": [
         "ShootMid"
       ]
@@ -171,15 +175,9 @@
       ]
     },
     {
-      "position": 3.0454545454545467,
+      "position": 3.127272727272725,
       "names": [
         "RetractIntake"
-      ]
-    },
-    {
-      "position": 3.5909090909090935,
-      "names": [
-        "ShootLow"
       ]
     }
   ]

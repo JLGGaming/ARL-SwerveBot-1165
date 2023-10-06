@@ -59,14 +59,14 @@ public final class Constants
     public static final int kSetpointMid = 46;
     public static final int kSetpointHigh = 44;
 
-    public static final double kP = 0.02;
+    public static final double kP = 0.03;
     public static final double kI = 0;
     public static final double kD = 0;
 
     public static final double kTolerance = 0;
 
-    public static final double kSpeedMax = 0.4;
-    public static final double kSpeedMin = -0.4;
+    public static final double kSpeedMax = 0.8;
+    public static final double kSpeedMin = -0.8;
 
     public static final double kVelocityMax = 0;
     public static final double kVelocityMin = 0;

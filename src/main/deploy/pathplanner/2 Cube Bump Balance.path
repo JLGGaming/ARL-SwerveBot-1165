@@ -16,7 +16,9 @@
       "isLocked": true,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "ShootHigh"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -74,12 +76,12 @@
     },
     {
       "anchorPoint": {
-        "x": 5.713006162854431,
-        "y": 2.87459504743571
+        "x": 4.890481134881511,
+        "y": 2.808545759609334
       },
       "prevControl": {
-        "x": 7.80777508923439,
-        "y": 0.05436502101074388
+        "x": 6.985250061261469,
+        "y": -0.011684266815631783
       },
       "nextControl": null,
       "holonomicAngle": 0.0,
@@ -88,7 +90,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "AutoBalance"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -103,13 +107,13 @@
       ]
     },
     {
-      "position": 1.090909090909091,
+      "position": 1.134545454545452,
       "names": [
         "RetractIntake"
       ]
     },
     {
-      "position": 2.000000000000001,
+      "position": 2.0,
       "names": [
         "ScoreMid"
       ]

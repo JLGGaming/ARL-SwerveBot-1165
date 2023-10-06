@@ -15,14 +15,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-<<<<<<< Updated upstream
-=======
 import frc.robot.commands.arm.MoveOverride;
 import frc.robot.commands.arm.ScoreHigh;
 import frc.robot.commands.arm.ScoreLow;
 import frc.robot.commands.arm.ScoreMid;
 import frc.robot.commands.swervedrive.auto.AutoBalanceCommand;
->>>>>>> Stashed changes
 import frc.robot.commands.swervedrive.auto.Autos;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDrive;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
@@ -41,6 +38,8 @@ import frc.robot.commands.arm.MoveOverride;
 import frc.robot.commands.arm.NudgeAuto;
 
 import java.io.File;
+
+import com.pathplanner.lib.PathConstraints;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -119,7 +118,8 @@ public class RobotContainer
 
     //drivebase.setDefaultCommand(!RobotBase.isSimulation() ? closedAbsoluteDrive : closedAbsoluteDrive);
     
-    drivebase.setDefaultCommand(headingDrive);
+    drivebase.setDefaultCommand(closedFieldRel)
+    ;
     m_armSubsystem.setDefaultCommand(new MoveMid());
 
     configureBindings();
@@ -145,6 +145,8 @@ public class RobotContainer
     driverController.povLeft().onTrue(new ScoreMid());
     driverController.povRight().onTrue(new ScoreMid());
     driverController.povDown().onTrue(new ScoreLow());
+    // driverController.b().onTrue(new AutoBalanceCommand(drivebase));
+
 
 
 
@@ -159,31 +161,25 @@ public class RobotContainer
    *
    * @return the command to run in autonomous
    */
-<<<<<<< Updated upstream
-  public Command getAutonomousCommand()
-  {
-    // An example command will be run in autonomous
-    return new NudgeAuto().andThen(new ScoreHigh());
-=======
   public Command getAutonomousCommand(String cube, boolean team, boolean bump, String end)
   {
     // An example command will be run in autonomous
     // return new NudgeAuto()
-
+    
     if (cube.equals("kNone")){
       return null;
     }
 
     if (cube.equals("kOneCube")) //If one cube is selected
       if (bump){ //If robot starts on the side with the black cable protector bump
-        if (end.equals("kBalance")) return new ScoreHigh().andThen(new AutoBalanceCommand(drivebase)); //Score cube high, then balance on the near side
+        if (end.equals("kBalance")) return new ScoreHigh(); //Score cube high, then balance on the near side
         else if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "One Cube Bump Taxi", new PathConstraints(3, 3), false); //Score cube high, then cross auto line
-        else if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "One Cube Bump Pickup", new PathConstraints(3, 3), false); //Score cube high, then pickup seconod cube
+        else if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "5 cube lmao", new PathConstraints(3, 3), false); //Score cube high, then pickup seconod cube
         else if (end.equals("kNone")) return new ScoreHigh(); //Don't move and score high
         }
 
       else if (bump == false){ //If robot starts on the side without the cable bump (Closest to the other teams substation)
-        if (end.equals("kBalance")) return new ScoreHigh().andThen(new AutoBalanceCommand(drivebase)); //Score cube high, then balance on the near side
+        if (end.equals("kBalance")) return new ScoreHigh(); //Score cube high, then balance on the near side
         else if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "One Cube NoBump Taxi", new PathConstraints(3, 3), false); //Score cube high, then cross auto line
         else if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "One Cube NoBump Pickup", new PathConstraints(3, 3), false); //Score cube high, then pickup seconod cube
         else if (end.equals("kNone")) return new ScoreHigh(); //Don't move and score high
@@ -191,14 +187,14 @@ public class RobotContainer
 
     if (cube.equals("kTwoCube")) //If Two cube is selected
       if (bump){ //If robot starts on the side with the black cable protector bump
-        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "2 Cube Bump Balance", new PathConstraints(3, 3), false).andThen(new AutoBalanceCommand(drivebase)); //Score cubes on the high and mid nodes, then balance on the far side of the charge station 
-        else if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "2 Cube Bump Pickup", new PathConstraints(3, 3), false); //Score cubes on the high and mid nodes, then approach the field center line
+        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "2 Cube Bump Balance", new PathConstraints(3, 3), false);//Score cubes on the high and mid nodes, then balance on the far side of the charge station 
+        else if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "2 Cube Bump Taxi", new PathConstraints(3, 3), false); //Score cubes on the high and mid nodes, then approach the field center line
         else if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "2 Cube Bump Pickup", new PathConstraints(3, 3), false); //Score cubes on the high and mid nodes, then pickup a 3rd cube
         else if (end.equals("kNone")) return Autos.FollowPath(drivebase, "2 Cube Bump", new PathConstraints(3, 3), false); //Score two cubes on the high and mid nodes, then wait in the community
       }
 
       else if (bump == false){ //If robot starts on the side without the cable bump (Closest to the other teams substation)
-        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "2 Cube NoBump Balance", new PathConstraints(3, 3), false).andThen(new AutoBalanceCommand(drivebase)); //Score cubes on the high and mid nodes, then balance on the far side of the charge station
+        if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "2 Cube NoBump Balance", new PathConstraints(3, 3), false); //Score cubes on the high and mid nodes, then balance on the far side of the charge station
         else if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "2 Cube NoBump Taxi", new PathConstraints(3, 3), false); //Score cubes on the high and mid nodes, then approach the field center line
         else if (end.equals("kPickup")) return Autos.FollowPath(drivebase, "2 Cube NoBump Pickup", new PathConstraints(3, 3), false); //Score cubes on the high and mid nodes, then pickup a 3rd cube
         else if (end.equals("kNone")) return Autos.FollowPath(drivebase, "2 Cube NoBump", new PathConstraints(3, 3), false); //Score two cubes on the high and mid nodes, then wait in the community
@@ -222,7 +218,6 @@ public class RobotContainer
 
     return null;
 
->>>>>>> Stashed changes
   }
 
   public void setDriveMode()
