@@ -9,20 +9,22 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-<<<<<<< Updated upstream
-=======
 import frc.robot.commands.arm.MoveOverride;
 import frc.robot.commands.arm.ScoreHigh;
 import frc.robot.commands.arm.ScoreLow;
 import frc.robot.commands.arm.ScoreMid;
+import frc.robot.commands.arm.TrimEncoderPosition;
 import frc.robot.commands.swervedrive.auto.AutoBalanceCommand;
->>>>>>> Stashed changes
 import frc.robot.commands.swervedrive.auto.Autos;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDrive;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
@@ -41,6 +43,10 @@ import frc.robot.commands.arm.MoveOverride;
 import frc.robot.commands.arm.NudgeAuto;
 
 import java.io.File;
+
+import javax.swing.AbstractAction;
+
+import com.pathplanner.lib.PathConstraints;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -66,13 +72,18 @@ public class RobotContainer
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+
+  AbsoluteDrive closedAbsoluteDrive;
+  AbsoluteFieldDrive closedFieldAbsoluteDrive;
+  TeleopDrive simClosedFieldRel, closedFieldRel, closedRobotRel, closedHeadingDrive;
+
   public RobotContainer()
   {
     // Configure the trigger bindings
 
 
 
-    AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
+    closedAbsoluteDrive = new AbsoluteDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
                                                           // controls are front-left positive
@@ -84,48 +95,60 @@ public class RobotContainer
                                                           () -> -driverController.getRightY(),
                                                           false);
 
-    AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
-                                                                         () ->
-                                                                             MathUtil.applyDeadband(driverController.getLeftX(),
-                                                                                                    OperatorConstants.LEFT_Y_DEADBAND),
-                                                                         () -> MathUtil.applyDeadband(driverController.getLeftY(),
-                                                                                                      OperatorConstants.LEFT_X_DEADBAND),
-                                                                         () -> driverController.getRightX(), false);
-    TeleopDrive simClosedFieldRel = new TeleopDrive(drivebase,
+    closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
+                                                                    () ->
+                                                                        MathUtil.applyDeadband(driverController.getLeftX(),
+                                                                                              OperatorConstants.LEFT_Y_DEADBAND),
+                                                                    () -> MathUtil.applyDeadband(driverController.getLeftY(),
+                                                                                                OperatorConstants.LEFT_X_DEADBAND),
+                                                                    () -> driverController.getRightX(), false);
+    simClosedFieldRel = new TeleopDrive(drivebase,
                                                     () -> MathUtil.applyDeadband(driverController.getLeftX(),
                                                                                  OperatorConstants.LEFT_Y_DEADBAND),
                                                     () -> MathUtil.applyDeadband(driverController.getLeftY(),
                                                                                  OperatorConstants.LEFT_X_DEADBAND),
                                                     () -> driverController.getRightX(), () -> true, false, false);
-    TeleopDrive closedFieldRel = new TeleopDrive(
+    closedFieldRel = new TeleopDrive(
         drivebase,
         () -> MathUtil.applyDeadband(driverController.getLeftY()*-1, OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(driverController.getLeftX()*-1, OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverController.getRightX(), () -> true, false, false);
 
 
-    TeleopDrive closedRobotRel = new TeleopDrive(
+    closedRobotRel = new TeleopDrive(
         drivebase,
         () -> MathUtil.applyDeadband(driverController.getLeftY()*-1, OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(driverController.getLeftX()*-1, OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverController.getRightX(), () -> false, false, false);
 
-    TeleopDrive headingDrive = new TeleopDrive(
-          drivebase,
-          () -> MathUtil.applyDeadband(driverController.getLeftY()*-1, OperatorConstants.LEFT_Y_DEADBAND),
-          () -> MathUtil.applyDeadband(driverController.getLeftX()*-1, OperatorConstants.LEFT_X_DEADBAND),
-          () -> -driverController.getRightX(), () -> true,
+    closedHeadingDrive = new TeleopDrive(
+        drivebase,
+        () -> MathUtil.applyDeadband(driverController.getLeftY()*-1, OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(driverController.getLeftX()*-1, OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverController.getRightX(), () -> true,
            false, true);
 
     //drivebase.setDefaultCommand(!RobotBase.isSimulation() ? closedAbsoluteDrive : closedAbsoluteDrive);
-    
-    drivebase.setDefaultCommand(headingDrive);
+    drivebase.setDefaultCommand(closedFieldRel);
     m_armSubsystem.setDefaultCommand(new MoveMid());
 
     configureBindings();
-
-
   }
+
+  TeleopDrive driveMode;
+  public void cycleDriveMode(){
+    Command currentCommand = drivebase.getCurrentCommand();
+    if (currentCommand.equals(closedFieldRel)) driveMode = closedRobotRel;
+    else if (currentCommand.equals(closedRobotRel)) driveMode = closedHeadingDrive;
+    else driveMode = closedFieldRel;  
+    setDriveMode(driveMode); 
+  }
+
+  public void setDriveMode(TeleopDrive driveMode){
+    System.out.println("BBB");
+    driveMode.schedule();
+  }
+
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -146,8 +169,10 @@ public class RobotContainer
     driverController.povRight().onTrue(new ScoreMid());
     driverController.povDown().onTrue(new ScoreLow());
 
+    driverController.leftBumper().onTrue(new TrimEncoderPosition(-1));
+    driverController.rightBumper().onTrue(new TrimEncoderPosition(1));
 
-
+    driverController.b().onTrue(new InstantCommand(() -> cycleDriveMode()));
 
     // new Joysti ckButton(driverController.a()).onTrue((new InstantCommand(drivebase::zeroGyro)));
     // new JoystickButton(coDriverController, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
@@ -159,13 +184,7 @@ public class RobotContainer
    *
    * @return the command to run in autonomous
    */
-<<<<<<< Updated upstream
-  public Command getAutonomousCommand()
-  {
-    // An example command will be run in autonomous
-    return new NudgeAuto().andThen(new ScoreHigh());
-=======
-  public Command getAutonomousCommand(String cube, boolean team, boolean bump, String end)
+  public Command getAutonomousCommand(String cube, boolean bump, String end)
   {
     // An example command will be run in autonomous
     // return new NudgeAuto()
@@ -212,6 +231,7 @@ public class RobotContainer
         else if (end.equals("kNone")) return Autos.FollowPath(drivebase, "3 Cube Bump", new PathConstraints(3, 3), false);
       }
 
+
       else if (bump == false){ //If robot starts on the side without the cable bump (Closest to the other teams substation)
         if (end.equals("kBalance")) return Autos.FollowPath(drivebase, "3 Cube NoBump Balance", new PathConstraints(3, 3), false).andThen(new AutoBalanceCommand(drivebase));
         else if (end.equals("kTaxi")) return Autos.FollowPath(drivebase, "3 Cube NoBump Taxi", new PathConstraints(3, 3), false);
@@ -222,7 +242,6 @@ public class RobotContainer
 
     return null;
 
->>>>>>> Stashed changes
   }
 
   public void setDriveMode()

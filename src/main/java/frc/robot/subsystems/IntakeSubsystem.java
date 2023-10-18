@@ -25,8 +25,8 @@ public class IntakeSubsystem extends SubsystemBase {
     // intakeLeft.restoreFactoryDefaults();
     // intakeRight.restoreFactoryDefaults();
 
-    intakeRight.setIdleMode(IdleMode.kBrake);
-    intakeLeft.setIdleMode(IdleMode.kBrake);
+    intakeRight.setIdleMode(IdleMode.kCoast);
+    intakeLeft.setIdleMode(IdleMode.kCoast);
 
     intakeRight.setInverted(true);
     intakeLeft.setInverted(false);
@@ -47,7 +47,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   
   public void Outtake(double speed){
-    intakeLeft.set(speed*1);
+    intakeLeft.set(speed*0.95);
     intakeRight.set(speed*0.8);
   }
 

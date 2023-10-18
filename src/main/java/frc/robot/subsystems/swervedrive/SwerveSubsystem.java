@@ -93,7 +93,10 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.drive(translation, rotation, fieldRelative, isOpenLoop);
   }
 
-
+  public void driveC(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop)
+  {
+    swerveDrive.drive(translation, rotation, fieldRelative, isOpenLoop);
+  }
 
   @Override
   public void periodic()

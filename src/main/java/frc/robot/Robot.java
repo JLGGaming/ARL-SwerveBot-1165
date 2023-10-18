@@ -31,6 +31,7 @@ public class Robot extends TimedRobot
 
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private final SendableChooser<Boolean> m_bump = new SendableChooser<>();
+  private final SendableChooser<Boolean> m_team = new SendableChooser<>();
   private final SendableChooser<String> m_end = new SendableChooser<>();
 
   private Timer disabledTimer;
@@ -68,11 +69,10 @@ public class Robot extends TimedRobot
 
 
   public void configAutoSelections(){
-    
     m_end.addOption("Balance", "kBalance");
     m_end.addOption("Taxi", "kTaxi");
     m_end.addOption("0.5 Cube", "kPickup");
-
+    m_end.addOption("None", "kNone");
     m_bump.addOption("Yes", true);
     m_bump.setDefaultOption("No", false);
 

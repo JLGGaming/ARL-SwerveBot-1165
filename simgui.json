@@ -36,6 +36,13 @@
       "/SmartDashboard/End Routine": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Pigeon 2 [15]": "Gyro"
+    },
+    "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {
@@ -47,6 +54,9 @@
     },
     "transitory": {
       "SmartDashboard": {
+        "Bump Side": {
+          "open": true
+        },
         "open": true
       }
     }
