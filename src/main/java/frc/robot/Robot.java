@@ -30,8 +30,8 @@ public class Robot extends TimedRobot
   private RobotContainer m_robotContainer;
 
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  private final SendableChooser<Boolean> m_team = new SendableChooser<>();
   private final SendableChooser<Boolean> m_bump = new SendableChooser<>();
+  private final SendableChooser<Boolean> m_team = new SendableChooser<>();
   private final SendableChooser<String> m_end = new SendableChooser<>();
 
   private Timer disabledTimer;

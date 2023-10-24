@@ -9,11 +9,11 @@
     "angle": 20
   },
   "rampRate": {
-    "drive": 0.25,
+    "drive": 0.20,
     "angle": 0
   },
   "encoderPulsePerRotation": {
-    "drive": 1,
+    "drive": 42,
     "angle": 1
   },
   "wheelGripCoefficientOfFriction": 1.19,

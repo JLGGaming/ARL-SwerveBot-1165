@@ -25,8 +25,8 @@ public class IntakeSubsystem extends SubsystemBase {
     // intakeLeft.restoreFactoryDefaults();
     // intakeRight.restoreFactoryDefaults();
 
-    intakeRight.setIdleMode(IdleMode.kBrake);
-    intakeLeft.setIdleMode(IdleMode.kBrake);
+    intakeRight.setIdleMode(IdleMode.kCoast);
+    intakeLeft.setIdleMode(IdleMode.kCoast);
 
     intakeRight.setInverted(true);
     intakeLeft.setInverted(false);

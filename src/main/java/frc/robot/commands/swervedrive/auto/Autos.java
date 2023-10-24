@@ -20,11 +20,14 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import frc.robot.Constants;
 import frc.robot.Constants.Auton;
 import frc.robot.commands.arm.LoadIn;
 import frc.robot.commands.arm.MoveGround;
 import frc.robot.commands.arm.MoveMid;
+import frc.robot.commands.arm.ScoreHigh;
 import frc.robot.commands.arm.ScoreLow;
+import frc.robot.commands.arm.ScoreMid;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.util.HashMap;
 import java.util.List;
@@ -77,9 +80,9 @@ public final class Autos
       eventMap.put("RetractIntake", new MoveMid());
       eventMap.put("LowerIntake", new LoadIn());
       eventMap.put("AutoBalance", new AutoBalanceCommand(swerve));
-      eventMap.put("ShootLow", new ScoreLow());
-      eventMap.put("ShootMid", new ScoreLow());
-      eventMap.put("ShootHigh", new ScoreLow());
+      eventMap.put("ShootLow", new ScoreLow(Constants.IntakeConstants.kLowSpeed));
+      eventMap.put("ShootMid", new ScoreMid(Constants.IntakeConstants.kMidSpeed));
+      eventMap.put("ShootHigh", new ScoreHigh(Constants.IntakeConstants.kHighSpeed));
 
 
     

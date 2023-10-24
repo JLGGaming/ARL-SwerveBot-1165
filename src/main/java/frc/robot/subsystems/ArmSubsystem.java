@@ -41,6 +41,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     mainArmMotor.setInverted(false);
 
+    mainArmMotor.setOpenLoopRampRate(0.5);
     mainArmMotor.setSmartCurrentLimit(MotorConstants.kArmSmartCurrent);
 
     // mainArmMotor.burnFlash();
@@ -61,11 +62,14 @@ public class ArmSubsystem extends SubsystemBase {
     });
   }
 
+  public void trimArmPosition(double trim) {
+    armEncoder.setPosition(armEncoder.getPosition() + trim);
+  }
+
   public double getArmPosition() {
     return armEncoder.getPosition();
   }
 
- 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

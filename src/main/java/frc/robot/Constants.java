@@ -55,9 +55,9 @@ public final class Constants
 
     public static final int kSetpointAutoZero = -36;
     public static final int kSetpointGround = 4;
-    public static final int kSetpointLow = 46;
-    public static final int kSetpointMid = 46;
-    public static final int kSetpointHigh = 44;
+    public static final int kSetpointLow = 50;
+    public static final int kSetpointMid = 50;
+    public static final int kSetpointHigh = 50;
 
     public static final double kP = 0.03;
     public static final double kI = 0;
@@ -73,8 +73,8 @@ public final class Constants
   }
 
   public static class IntakeConstants {
-    public static final double kHighSpeed = 0.7;
-    public static final double kMidSpeed = 0.6;
+    public static final double kHighSpeed = 0.4;
+    public static final double kMidSpeed = 0.3;
     public static final double kLowSpeed = 0.5;
 
     public static final double kIntakeSpeed = 0.25;
