@@ -14,9 +14,9 @@ import frc.robot.commands.intake.Outtake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreLow extends SequentialCommandGroup {
   /** Creates a new ScoreLow. */
-  public ScoreLow() {
+  public ScoreLow(double speed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new Outtake(IntakeConstants.kLowSpeed).withTimeout(0.5));
+    addCommands(new Outtake(speed).withTimeout(0.5));
   }
 }

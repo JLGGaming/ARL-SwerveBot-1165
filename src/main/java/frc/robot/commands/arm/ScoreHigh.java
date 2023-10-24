@@ -14,10 +14,10 @@ import frc.robot.commands.intake.Outtake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreHigh extends SequentialCommandGroup {
   /** Creates a new ScoreHigh. */
-  public ScoreHigh() {
+  public ScoreHigh(double speed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new Outtake(IntakeConstants.kHighSpeed).withTimeout(0.35));
+    addCommands(new Outtake(speed).withTimeout(0.35));
   }
 }
 

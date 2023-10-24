@@ -14,9 +14,9 @@ import frc.robot.commands.intake.Outtake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreMid extends SequentialCommandGroup {
   /** Creates a new ScoreMid. */
-  public ScoreMid() {
+  public ScoreMid(double speed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new MoveMid().withTimeout(0.25).raceWith(new Intake(0.1)), new Outtake(IntakeConstants.kMidSpeed).withTimeout(0.5));
+    addCommands(new MoveMid().withTimeout(0.25).raceWith(new Intake(0.1)), new Outtake(speed).withTimeout(0.5));
   }
 }

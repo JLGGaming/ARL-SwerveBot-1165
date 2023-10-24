@@ -14,8 +14,6 @@ public class TrimEncoderPosition extends InstantCommand {
   public double trimAmount;
 
   public TrimEncoderPosition(double trim) {
-    addRequirements(RobotContainer.m_armSubsystem);
-
     trimAmount = trim;
   }
 

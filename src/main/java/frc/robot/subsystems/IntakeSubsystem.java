@@ -51,6 +51,11 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeRight.set(speed*1);
   }
 
+  public void rotateCube(double speed) {
+    intakeLeft.set(speed);
+    intakeRight.set(-speed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
