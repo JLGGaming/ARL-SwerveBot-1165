@@ -61,6 +61,20 @@ public class ArmSubsystem extends SubsystemBase {
     });
   }
 
+<<<<<<< Updated upstream
+=======
+  public CommandBase setArmPosition(double setPoint) {
+    return runOnce( () -> {
+    System.out.println("Arm Set");
+    armEncoder.setPosition(setPoint);
+    });
+  }
+
+  public void trimArmPosition(double trim) {
+    armEncoder.setPosition(armEncoder.getPosition() + trim);
+  }
+
+>>>>>>> Stashed changes
   public double getArmPosition() {
     return armEncoder.getPosition();
   }

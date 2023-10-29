@@ -27,6 +27,14 @@ public class Robot extends TimedRobot
 
   private RobotContainer m_robotContainer;
 
+<<<<<<< Updated upstream
+=======
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private final SendableChooser<Boolean> m_bump = new SendableChooser<>();
+  private final SendableChooser<String> m_team = new SendableChooser<>();
+  private final SendableChooser<String> m_end = new SendableChooser<>();
+
+>>>>>>> Stashed changes
   private Timer disabledTimer;
 
   public Robot()
@@ -49,12 +57,45 @@ public class Robot extends TimedRobot
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
+    RobotContainer.m_LED.set(-0.25);
     // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
     // immediately when disabled, but then also let it be pushed more 
     disabledTimer = new Timer();
   }
 
+<<<<<<< Updated upstream
+=======
+
+
+  public void configAutoSelections(){
+    
+    m_team.addOption("Blue", "Blue");
+    m_team.addOption("Red", "Red");
+
+    
+    // m_end.addOption("Balance", "kBalance");
+    // m_end.addOption("Taxi", "kTaxi");
+    // m_end.addOption("0.5 Cube", "kPickup");
+    // m_end.addOption("None", "kNone");
+
+
+    // m_bump.addOption("Yes", true);
+    // m_bump.setDefaultOption("No", false);
+
+    // m_chooser.addOption("None", "kNone");
+    // m_chooser.addOption("One Cube", "kOneCube");
+    // m_chooser.setDefaultOption("Two Cube", "kTwoCube");
+    // m_chooser.addOption("Three Cube", "kThreeCube");
+    
+    // SmartDashboard.putData("Cube Ammount", m_chooser);
+    // SmartDashboard.putData("Bump Side", m_bump);
+    // SmartDashboard.putData("End Routine", m_end);
+    SmartDashboard.putData("Allience Color", m_team);
+
+  }
+
+
+>>>>>>> Stashed changes
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics that you want ran
    * during disabled, autonomous, teleoperated and test.
@@ -100,7 +141,11 @@ public class Robot extends TimedRobot
   public void autonomousInit()
   {
     m_robotContainer.setMotorBrake(true);
+<<<<<<< Updated upstream
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+=======
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_team.getSelected());
+>>>>>>> Stashed changes
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)
